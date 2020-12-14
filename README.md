@@ -1,27 +1,100 @@
-# Permute
+# @packageforge/permute
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
+Function to permute collections.
+* `permuteCombination` Iterate over combinations of elements in multiple arrays.
+* `permuteSample` Iterate over samples of an array in every combination.
+* `permuteOrder` Iterate over every order of elements in an array.
+* `permuteRange` Iterate over a numeric range and return an array of the range.
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## `permuteCombination`
+###### Iterate over combinations of elements in two or more arrays.
+* Return `false` from the callback to exit the iteration.
+```typescript
+import { permuteCombination } from '@packageforge/permute';
 
-## Code scaffolding
+permuteCombination(["Lear", "Fool"], [true, false], (name, state) => {
+  console.log(name, state);
+});
+```
+Output:
+```
+Lear, true
+Lear, false
+Fool, true
+Fool, false
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## `permuteSample`
+###### Iterate over samples of an array in every combination.
+* Return `false` from the callback to exit the iteration.
+```typescript
+import { permuteSample } from '@packageforge/permute';
 
-## Build
+permuteSample(["Lear", "Cordelia", "Goneril", "Regan", "Fool"], 2, names => {
+  console.log(names.join(', '));
+});
+```
+Output:
+```
+Lear, Cordelia
+Lear, Goneril
+Lear, Regan
+Lear, Fool
+Cordelia, Goneril
+Cordelia, Regan
+Cordelia, Fool
+Goneril, Regan
+Goneril, Fool
+Regan, Fool
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## `permuteOrder`
+###### Iterate over every order of elements in an array.
+* Return `false` from the callback to exit the iteration.
+```typescript
+import { permuteOrder } from '@packageforge/permute';
 
-## Running unit tests
+permuteOrder(["Cordelia", "Goneril", "Regan"], names => {
+  console.log(names.join(', '));
+});
+```
+Output:
+```
+Cordelia, Goneril, Regan
+Cordelia, Regan, Goneril
+Goneril, Cordelia, Regan
+Goneril, Regan, Cordelia
+Regan, Cordelia, Goneril
+Regan, Goneril, Cordelia
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## `permuteRange`
+###### Iterate over a numeric range and return an array of the range.
+* The callback parameter is optional.
+* Return `false` from the callback to exit the iteration and truncate the returned range without the value (exclusive).
+* Return `true` from the callback to exit the iteration and truncate the returned range with the value (inclusive).
+```typescript
+import { permuteRange } from '@packageforge/permute';
 
-## Running end-to-end tests
+const rangeOne = permuteRange(3, index => {
+  console.log(index);
+});
+console.log("rangeOne", rangeOne);
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+const rangeTwo = permuteRange(3, 3, index => {
+  console.log(index);
+});
+console.log("rangeTwo", rangeTwo);
+```
+Output:
+```
+0
+1
+2
+rangeOne, 0,1,2
+3
+4
+5
+rangeTwo, 3,4,5
+```

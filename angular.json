@@ -122,6 +122,46 @@
           }
         }
       }
+    },
+    "permute": {
+      "projectType": "library",
+      "root": "projects/permute",
+      "sourceRoot": "projects/permute/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/permute/tsconfig.lib.json",
+            "project": "projects/permute/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/permute/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/permute/src/test.ts",
+            "tsConfig": "projects/permute/tsconfig.spec.json",
+            "karmaConfig": "projects/permute/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/permute/tsconfig.lib.json",
+              "projects/permute/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "Permute"
